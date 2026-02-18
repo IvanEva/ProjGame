@@ -36,5 +36,5 @@
 
 1. **Клонируйте репозиторий**
    ```bash
-   git clone https://github.com/ваш-username/platformer-game.git
+   git clone https://github.com/IvanEva/ProjGame.git
    cd platformer-game
