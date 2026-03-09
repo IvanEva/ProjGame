@@ -18,7 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.x += self.vel_x
         self.collide(self.vel_x, 0, blocks)
 
-        # Вертикальное движение (гравитация)
+        # Вертикальное движение
         self.vel_y += GRAVITY
         self.rect.y += self.vel_y
         self.on_ground = False
@@ -27,15 +27,15 @@ class Player(pygame.sprite.Sprite):
     def collide(self, dx, dy, blocks):
         for block in blocks:
             if self.rect.colliderect(block.rect):
-                if dx > 0:          # движение вправо
+                if dx > 0:
                     self.rect.right = block.rect.left
-                elif dx < 0:         # движение влево
+                elif dx < 0:
                     self.rect.left = block.rect.right
-                if dy > 0:          # падение вниз
+                if dy > 0:
                     self.rect.bottom = block.rect.top
                     self.vel_y = 0
                     self.on_ground = True
-                elif dy < 0:         # прыжок вверх (удар головой)
+                elif dy < 0:
                     self.rect.top = block.rect.bottom
                     self.vel_y = 0
 

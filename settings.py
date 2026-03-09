@@ -1,6 +1,6 @@
 import os
 
-# Корневая директория
+# Корневая директория проекта
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Пути к ресурсам
@@ -15,16 +15,16 @@ LEVELS_DIR = os.path.join(ASSETS_DIR, 'levels')
 BACKGROUND_IMAGE = os.path.join(BACKGROUNDS_DIR, 'background.png')
 
 # Разрешение (логическое)
-LOGICAL_WIDTH = 800
-LOGICAL_HEIGHT = 600
+LOGICAL_WIDTH = 1920
+LOGICAL_HEIGHT = 1080
 
 # Режим экрана
-FULLSCREEN = True          # Полноэкранный режим
-SCALED = True              # Масштабировать под текущее разрешение
+FULLSCREEN = True          # полноэкранный режим
+SCALED = True              # масштабирование под реальное разрешение монитора
 FPS = 30
 TITLE = "Platformer Game"
 
-# Цвета (RGB)
+# Цвета
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
@@ -35,5 +35,5 @@ SKY_BLUE = (135, 206, 235)
 
 # Физика
 PLAYER_SPEED = 5
-PLAYER_JUMP_POWER = -12      # отрицательное — прыжок вверх
+PLAYER_JUMP_POWER = -12
 GRAVITY = 0.5
