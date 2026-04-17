@@ -18,6 +18,10 @@ BACKGROUND_IMAGE = os.path.join(BACKGROUNDS_DIR, 'background.png')
 LOGICAL_WIDTH = 1920
 LOGICAL_HEIGHT = 1080
 
+# Прозрачность передних слоёв (0 - полностью прозрачный, 255 - полностью непрозрачный)
+FOREGROUND_ALPHA_FADED = 0    # или 0 для полной прозрачности
+FOREGROUND_ALPHA_VISIBLE = 255
+
 # Режим экрана
 FULLSCREEN = True          # полноэкранный режим
 SCALED = True              # масштабирование под реальное разрешение монитора
