@@ -1,10 +1,9 @@
 import pygame
-from settings import LOGICAL_WIDTH, LOGICAL_HEIGHT, PLAYER_SPEED
+from settings import LOGICAL_WIDTH, LOGICAL_HEIGHT, PLAYER_SPEED, FOREGROUND_ALPHA_FADED, FOREGROUND_ALPHA_VISIBLE
 from src.utils.level_loader import load_level
 from src.utils.camera import Camera
 from src.entities.player import Player
 from src.entities.block import Block
-from settings import FOREGROUND_ALPHA_FADED, FOREGROUND_ALPHA_VISIBLE
 
 class GameScene:
     def __init__(self, game):
@@ -12,7 +11,7 @@ class GameScene:
         self.all_sprites = pygame.sprite.Group()
         self.blocks = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
-        self.foreground_sprites = pygame.sprite.Group()   # для передних слоёв
+        self.foreground_sprites = pygame.sprite.Group()
 
         self.level_width, self.level_height = load_level(
             'level_01.tmx',
@@ -31,13 +30,11 @@ class GameScene:
             self.level_height = LOGICAL_HEIGHT
         else:
             print(f"✅ Уровень загружен, размер: {self.level_width}x{self.level_height}")
+            print(f"Количество передних спрайтов: {len(self.foreground_sprites)}")
 
-        # Создаём камеру с размерами экрана и карты
-        self.camera = Camera(LOGICAL_WIDTH, LOGICAL_HEIGHT,
-                             self.level_width, self.level_height)
+        self.camera = Camera(LOGICAL_WIDTH, LOGICAL_HEIGHT, self.level_width, self.level_height)
 
     def _create_test_level(self):
-        """Запасной уровень, если .tmx не найден"""
         for i in range(0, LOGICAL_WIDTH, 50):
             block = Block(i, LOGICAL_HEIGHT - 50, 50, 50)
             self.blocks.add(block)
@@ -62,21 +59,18 @@ class GameScene:
 
             self.player.sprite.update(self.blocks)
 
-            # --- Прозрачность целых слоёв ---
             layers_to_fade = set()
             for sprite in self.foreground_sprites:
                 if self.player.sprite.rect.colliderect(sprite.rect):
                     layers_to_fade.add(sprite.layer_name)
-
             for sprite in self.foreground_sprites:
                 if sprite.layer_name in layers_to_fade:
-                    sprite.image.set_alpha(FOREGROUND_ALPHA_FADED)  # 0 - полностью прозрачный
+                    sprite.image.set_alpha(FOREGROUND_ALPHA_FADED)
                 else:
-                    sprite.image.set_alpha(FOREGROUND_ALPHA_VISIBLE)  # 255 - непрозрачный
+                    sprite.image.set_alpha(FOREGROUND_ALPHA_VISIBLE)
 
             self.camera.update(self.player.sprite)
 
     def draw(self, screen):
-        # Отрисовка всех спрайтов со смещением камеры
         for sprite in self.all_sprites:
             screen.blit(sprite.image, self.camera.apply(sprite))

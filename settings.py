@@ -1,30 +1,22 @@
 import os
 
-# Корневая директория проекта
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Пути к ресурсам
 ASSETS_DIR = os.path.join(BASE_DIR, 'assets')
 IMAGES_DIR = os.path.join(ASSETS_DIR, 'images')
 BACKGROUNDS_DIR = os.path.join(IMAGES_DIR, 'backgrounds')
 SOUNDS_DIR = os.path.join(ASSETS_DIR, 'sounds')
 FONTS_DIR = os.path.join(ASSETS_DIR, 'fonts')
 LEVELS_DIR = os.path.join(ASSETS_DIR, 'levels')
-
-# Фоновое изображение (если есть)
-BACKGROUND_IMAGE = os.path.join(BACKGROUNDS_DIR, 'background.png')
+PLAYER_ANIMATIONS_DIR = os.path.join(IMAGES_DIR, 'characters', 'player')
 
 # Разрешение (логическое)
 LOGICAL_WIDTH = 1920
 LOGICAL_HEIGHT = 1080
 
-# Прозрачность передних слоёв (0 - полностью прозрачный, 255 - полностью непрозрачный)
-FOREGROUND_ALPHA_FADED = 0    # или 0 для полной прозрачности
-FOREGROUND_ALPHA_VISIBLE = 255
-
 # Режим экрана
-FULLSCREEN = True          # полноэкранный режим
-SCALED = True              # масштабирование под реальное разрешение монитора
+FULLSCREEN = True
+SCALED = True
 FPS = 30
 TITLE = "Platformer Game"
 
@@ -41,3 +33,19 @@ SKY_BLUE = (135, 206, 235)
 PLAYER_SPEED = 5
 PLAYER_JUMP_POWER = -12
 GRAVITY = 0.5
+
+# Прозрачность передних слоёв
+FOREGROUND_ALPHA_FADED = 0
+FOREGROUND_ALPHA_VISIBLE = 255
+
+# --- Настройки спрайт-листа персонажа ---
+PLAYER_FRAME_WIDTH = 128
+PLAYER_FRAME_HEIGHT = 128
+
+# Конфигурация анимаций (без jump, т.к. файла нет)
+PLAYER_ANIMATIONS_CONFIG = {
+    'idle':   {'filename': 'Idle',   'frames': 6, 'speed': 150},
+    'walk':   {'filename': 'Walk',   'frames': 10, 'speed': 100},
+    'run':    {'filename': 'Run',    'frames': 10, 'speed': 80},
+    'attack': {'filename': 'Attack', 'frames': 4, 'speed': 100},
+}

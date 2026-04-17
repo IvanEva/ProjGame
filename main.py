@@ -6,7 +6,6 @@ from src.scenes.game_scene import GameScene
 class Game:
     def __init__(self):
         pygame.init()
-
         flags = 0
         if FULLSCREEN:
             flags |= pygame.FULLSCREEN
@@ -31,6 +30,7 @@ class Game:
 
             self.current_scene.update()
 
+            self.screen.fill(SKY_BLUE)
             self.current_scene.draw(self.screen)
             pygame.display.flip()
 
