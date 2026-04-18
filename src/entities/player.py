@@ -1,5 +1,5 @@
 import pygame
-from settings import GRAVITY, PLAYER_JUMP_POWER, BLUE
+from settings import GRAVITY, PLAYER_JUMP_POWER, PLAYER_SPEED, PLAYER_RUN_SPEED, BLUE
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -24,6 +24,7 @@ class Player(pygame.sprite.Sprite):
         self.vel_y = 0
         self.on_ground = False
         self.facing_right = True
+        self.is_running = False
 
     def _create_fallback_surface(self):
         surf = pygame.Surface((30, 50))
@@ -41,6 +42,10 @@ class Player(pygame.sprite.Sprite):
             self.current_action = 'idle'
             self.current_frame = 0
             self.image = self.animations[self.current_action][self.current_frame]
+            # Обновляем размер rect, сохраняя нижнюю границу
+            old_bottom = self.rect.bottom
+            self.rect.size = self.image.get_size()
+            self.rect.bottom = old_bottom
 
     def update_animation(self):
         now = pygame.time.get_ticks()
@@ -48,14 +53,38 @@ class Player(pygame.sprite.Sprite):
         if now - self.last_update > speed:
             self.last_update = now
             self.current_frame = (self.current_frame + 1) % len(self.animations[self.current_action])
-            self.image = self.animations[self.current_action][self.current_frame]
+            new_image = self.animations[self.current_action][self.current_frame]
+            old_bottom = self.rect.bottom
+            self.image = new_image
+            self.rect.size = new_image.get_size()
+            self.rect.bottom = old_bottom
 
     def update(self, blocks):
+        keys = pygame.key.get_pressed()
+        # Бег: зажатый Shift
+        self.is_running = keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]
+
+        # Выбор скорости
+        if self.is_running and self.on_ground:
+            current_speed = PLAYER_RUN_SPEED
+        else:
+            current_speed = PLAYER_SPEED
+
+        # Горизонтальное управление
+        self.vel_x = 0
+        if keys[pygame.K_LEFT]:
+            self.vel_x = -current_speed
+        if keys[pygame.K_RIGHT]:
+            self.vel_x = current_speed
+
         # Смена анимации
         if not self.on_ground:
             self.current_action = 'jump' if 'jump' in self.animations else 'idle'
         elif self.vel_x != 0:
-            self.current_action = 'run' if 'run' in self.animations else 'walk'
+            if self.is_running and 'run' in self.animations:
+                self.current_action = 'run'
+            else:
+                self.current_action = 'walk' if 'walk' in self.animations else 'idle'
         else:
             self.current_action = 'idle'
 
@@ -67,7 +96,7 @@ class Player(pygame.sprite.Sprite):
             self.current_frame = 0
         self.update_animation()
 
-        # Движение
+        # Движение и коллизии
         self.rect.x += self.vel_x
         self.collide(self.vel_x, 0, blocks)
 
@@ -76,7 +105,7 @@ class Player(pygame.sprite.Sprite):
         self.on_ground = False
         self.collide(0, self.vel_y, blocks)
 
-        # Поворот
+        # Поворот спрайта
         if self.vel_x > 0:
             self.facing_right = True
         elif self.vel_x < 0:

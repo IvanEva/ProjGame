@@ -30,7 +30,8 @@ BROWN = (139, 69, 19)
 SKY_BLUE = (135, 206, 235)
 
 # Физика
-PLAYER_SPEED = 5
+PLAYER_SPEED = 5          # обычная ходьба
+PLAYER_RUN_SPEED = 10     # бег (зажатый Shift)
 PLAYER_JUMP_POWER = -12
 GRAVITY = 0.5
 
@@ -40,9 +41,8 @@ FOREGROUND_ALPHA_VISIBLE = 255
 
 # --- Настройки спрайт-листа персонажа ---
 PLAYER_FRAME_WIDTH = 128
-PLAYER_FRAME_HEIGHT = 128
+PLAYER_FRAME_HEIGHT = 70
 
-# Конфигурация анимаций (без jump, т.к. файла нет)
 PLAYER_ANIMATIONS_CONFIG = {
     'idle':   {'filename': 'Idle',   'frames': 6, 'speed': 150},
     'walk':   {'filename': 'Walk',   'frames': 10, 'speed': 100},

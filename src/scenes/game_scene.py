@@ -49,16 +49,11 @@ class GameScene:
                 self.player.sprite.jump()
 
     def update(self):
-        keys = pygame.key.get_pressed()
         if self.player.sprite:
-            self.player.sprite.vel_x = 0
-            if keys[pygame.K_LEFT]:
-                self.player.sprite.vel_x = -PLAYER_SPEED
-            if keys[pygame.K_RIGHT]:
-                self.player.sprite.vel_x = PLAYER_SPEED
-
+            # Всё управление и обновление игрока теперь внутри player.update()
             self.player.sprite.update(self.blocks)
 
+            # Прозрачность передних слоёв (целиком слой)
             layers_to_fade = set()
             for sprite in self.foreground_sprites:
                 if self.player.sprite.rect.colliderect(sprite.rect):

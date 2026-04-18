@@ -82,14 +82,17 @@ def load_level(tmx_filename, player_group, blocks_group, all_sprites, foreground
             if layer.name == "Entities":
                 for obj in layer:
                     if obj.name == "player":
-                        player = Player(obj.x, obj.y - 50)
+                        # Создаём игрока с временными координатами
+                        player = Player(0, 0)
                         animations, speeds = load_all_animations(PLAYER_ANIMATIONS_DIR, PLAYER_ANIMATIONS_CONFIG)
                         if animations:
                             player.load_animations(animations, speeds)
                         else:
                             print("⚠️ Анимации не загружены, используется заглушка")
+                        # Устанавливаем позицию: ноги на уровне obj.y + obj.height
+                        player.rect.bottom = obj.y + obj.height
+                        player.rect.x = obj.x
                         player_group.add(player)
                         all_sprites.add(player)
 
-    # ВАЖНО: return за пределами цикла
     return map_width, map_height
