@@ -32,9 +32,9 @@ SKY_BLUE = (135, 206, 235)
 
 # Физика
 PLAYER_SPEED = 5          # обычная ходьба
-PLAYER_RUN_SPEED = 10     # бег (зажатый Shift)
+PLAYER_RUN_SPEED = 9     # бег (зажатый Shift)
 PLAYER_JUMP_POWER = -12
-GRAVITY = 0.5
+GRAVITY = 1.2
 
 # Прозрачность передних слоёв
 FOREGROUND_ALPHA_FADED = 0
@@ -49,8 +49,8 @@ PLAYER_FRAME_HEIGHT = 70
 
 PLAYER_ANIMATIONS_CONFIG = {
     'idle':   {'filename': 'Idle',   'frames': 6, 'speed': 150},
-    'walk':   {'filename': 'Walk',   'frames': 10, 'speed': 100},
-    'run':    {'filename': 'Run',    'frames': 10, 'speed': 80},
+    'walk':   {'filename': 'Walk',   'frames': 10, 'speed': 120},
+    'run':    {'filename': 'Run',    'frames': 10, 'speed': 100},
     'attack': {'filename': 'Attack', 'frames': 4, 'speed': 100},
-    'jump':   {'filename': 'Jump',   'frames': 5, 'speed': 100}
+    'jump':   {'filename': 'Jump',   'frames': 5, 'speed': 250}
 }
