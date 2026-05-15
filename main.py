@@ -6,6 +6,7 @@ from src.scenes.game_scene import GameScene
 class Game:
     def __init__(self):
         pygame.init()
+        self.PAUSE_KEY = PAUSE_KEY
         flags = 0
         if FULLSCREEN:
             flags |= pygame.FULLSCREEN
@@ -17,7 +18,8 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
 
-        self.current_scene = GameScene(self)
+        self.game_scene = GameScene(self)
+        self.current_scene = self.game_scene
 
     def run(self):
         while self.running:

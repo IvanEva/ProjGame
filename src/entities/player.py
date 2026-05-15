@@ -6,12 +6,13 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         # Заглушка (будет заменена при вызове load_animations)
         self.animations = {
-            'idle': [self._create_fallback_surface()],
-            'walk': [self._create_fallback_surface()],
-            'run': [self._create_fallback_surface()],
+            'idle':   [self._create_fallback_surface()],
+            'walk':   [self._create_fallback_surface()],
+            'run':    [self._create_fallback_surface()],
             'attack': [self._create_fallback_surface()],
+            'jump':   [self._create_fallback_surface()],   # <-- добавлен jump
         }
-        self.animation_speeds = {'idle': 100, 'walk': 100, 'run': 100, 'attack': 100}
+        self.animation_speeds = {'idle': 100, 'walk': 100, 'run': 100, 'attack': 100, 'jump': 100}
         self.current_action = 'idle'
         self.current_frame = 0
         self.last_update = pygame.time.get_ticks()
@@ -61,16 +62,13 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, blocks):
         keys = pygame.key.get_pressed()
-        # Бег: зажатый Shift
         self.is_running = keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]
 
-        # Выбор скорости
         if self.is_running and self.on_ground:
             current_speed = PLAYER_RUN_SPEED
         else:
             current_speed = PLAYER_SPEED
 
-        # Горизонтальное управление
         self.vel_x = 0
         if keys[pygame.K_LEFT]:
             self.vel_x = -current_speed
@@ -88,7 +86,6 @@ class Player(pygame.sprite.Sprite):
         else:
             self.current_action = 'idle'
 
-        # Защита от отсутствия анимации
         if self.current_action not in self.animations:
             self.current_action = 'idle'
 

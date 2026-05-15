@@ -1,5 +1,5 @@
 import pygame
-from settings import LOGICAL_WIDTH, LOGICAL_HEIGHT, PLAYER_SPEED, FOREGROUND_ALPHA_FADED, FOREGROUND_ALPHA_VISIBLE
+from settings import LOGICAL_WIDTH, LOGICAL_HEIGHT, PLAYER_SPEED, FOREGROUND_ALPHA_FADED, FOREGROUND_ALPHA_VISIBLE, PAUSE_KEY
 from src.utils.level_loader import load_level
 from src.utils.camera import Camera
 from src.entities.player import Player
@@ -8,6 +8,7 @@ from src.entities.block import Block
 class GameScene:
     def __init__(self, game):
         self.game = game
+        self.game.game_scene = self
         self.all_sprites = pygame.sprite.Group()
         self.blocks = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
@@ -44,13 +45,17 @@ class GameScene:
         self.all_sprites.add(platform)
 
     def handle_event(self, event):
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.QUIT:
+            self.game.running = False
+        elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and self.player.sprite:
                 self.player.sprite.jump()
+            elif event.key == PAUSE_KEY:
+                from src.scenes.pause_scene import PauseScene
+                self.game.current_scene = PauseScene(self.game)
 
     def update(self):
         if self.player.sprite:
-            # Всё управление и обновление игрока теперь внутри player.update()
             self.player.sprite.update(self.blocks)
 
             # Прозрачность передних слоёв (целиком слой)

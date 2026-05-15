@@ -1,4 +1,5 @@
 import os
+import pygame   # <-- добавлен импорт pygame
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -20,7 +21,7 @@ SCALED = True
 FPS = 30
 TITLE = "Platformer Game"
 
-# Цвета
+# Цветы
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
@@ -39,8 +40,11 @@ GRAVITY = 0.5
 FOREGROUND_ALPHA_FADED = 0
 FOREGROUND_ALPHA_VISIBLE = 255
 
+# Клавиша для вызова меню паузы
+PAUSE_KEY = pygame.K_ESCAPE   # или pygame.K_p
+
 # --- Настройки спрайт-листа персонажа ---
-PLAYER_FRAME_WIDTH = 128
+PLAYER_FRAME_WIDTH = 32
 PLAYER_FRAME_HEIGHT = 70
 
 PLAYER_ANIMATIONS_CONFIG = {
@@ -48,4 +52,5 @@ PLAYER_ANIMATIONS_CONFIG = {
     'walk':   {'filename': 'Walk',   'frames': 10, 'speed': 100},
     'run':    {'filename': 'Run',    'frames': 10, 'speed': 80},
     'attack': {'filename': 'Attack', 'frames': 4, 'speed': 100},
+    'jump':   {'filename': 'Jump',   'frames': 5, 'speed': 100}
 }
